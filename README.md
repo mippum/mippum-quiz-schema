@@ -1,0 +1,1 @@
+# mippum-quiz-schema
