@@ -1,0 +1,6 @@
+{
+    "type": "Checkbox",
+    "question": "Choose a numbers.",
+    "options": ["A", "1", "2", "C", "D"],
+    "answer": [2,3]
+}
