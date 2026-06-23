@@ -1,0 +1,10 @@
+{
+    "type": "ShortAnswer",
+    "question": "1+1=?",
+    "answerType": "Number",
+    "answer": 2,
+    "help": {
+        "summary": "1+1=2",
+        "explanation": "If you add one apple to one apple, you get two apples."
+    }
+}
