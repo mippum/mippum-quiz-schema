@@ -2,10 +2,12 @@
 
 미쁨(mippum) 브랜드에서 사용하는 퀴즈(quiz) 데이터의 스키마를 정의합니다.
 
-- 스키마 파일: [`quiz.schema.json`](quiz.schema.json) (JSON Schema, draft 2020-12)
-- 예시 데이터: [`samples/`](samples/)
+- 단일 문항 스키마: [`quiz.schema.json`](quiz.schema.json) — 예시 [`samples/quiz/`](samples/quiz/)
+- 묶음(여러 문항) 스키마: [`quiz-set.schema.json`](quiz-set.schema.json) — 예시 [`samples/quiz-set/`](samples/quiz-set/)
+- 모두 JSON Schema draft 2020-12
 
-하나의 퀴즈는 하나의 JSON 객체이며, 아래 필드로 구성됩니다.
+하나의 퀴즈(문항)는 하나의 JSON 객체이며, 아래 필드로 구성됩니다.
+여러 문항을 묶을 때는 [퀴즈 묶음](#퀴즈-묶음-quiz-set) 형식을 사용합니다.
 
 ## 공통 필드
 
@@ -94,3 +96,34 @@
 - `answer`의 인덱스는 **1-based**입니다. 즉 첫 번째 선택지가 `1`입니다.
 - 객관식(`MultipleChoice`, `Checkbox`)은 `answerType`을 사용하지 않습니다.
 - 단답/자유형(`ShortAnswer`, `FreeAnswer`)은 `options`를 사용하지 않습니다.
+
+## 퀴즈 묶음 (Quiz Set)
+
+여러 문항을 하나로 묶을 때는 [`quiz-set.schema.json`](quiz-set.schema.json)을 사용합니다.
+`quizzes` 배열의 각 항목은 위에서 정의한 단일 문항([`quiz.schema.json`](quiz.schema.json))을 그대로 참조(`$ref`)합니다.
+
+| 필드 | 타입 | 필수 | 설명 |
+| --- | --- | --- | --- |
+| `quizzes` | 문항[] | ✅ | 문항 목록 (출제 순서대로, 최소 1개) |
+| `title` | string | | 퀴즈 묶음 제목 |
+| `description` | string | | 문항 앞에 표시할 설명 |
+
+```json
+{
+  "title": "Warm-up",
+  "quizzes": [
+    {
+      "type": "MultipleChoice",
+      "question": "1+1=?",
+      "options": ["0", "1", "2", "3", "4"],
+      "answer": 3
+    },
+    {
+      "type": "ShortAnswer",
+      "question": "2+2=?",
+      "answerType": "Number",
+      "answer": 4
+    }
+  ]
+}
+```

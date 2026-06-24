@@ -1,0 +1,17 @@
+{
+  "title": "Warm-up",
+  "quizzes": [
+    {
+      "type": "MultipleChoice",
+      "question": "1+1=?",
+      "options": ["0", "1", "2", "3", "4"],
+      "answer": 3
+    },
+    {
+      "type": "ShortAnswer",
+      "question": "2+2=?",
+      "answerType": "Number",
+      "answer": 4
+    }
+  ]
+}

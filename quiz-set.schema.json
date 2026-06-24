@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/mippum/mippum-quiz-schema/blob/main/quiz-set.schema.json",
+  "title": "Mippum Quiz Set",
+  "description": "An ordered collection of mippum quiz questions.",
+  "type": "object",
+  "required": ["quizzes"],
+  "additionalProperties": false,
+  "properties": {
+    "title": {
+      "description": "The title of the quiz set.",
+      "type": "string",
+      "minLength": 1
+    },
+    "description": {
+      "description": "An optional description shown before the quizzes.",
+      "type": "string"
+    },
+    "quizzes": {
+      "description": "The quizzes that make up this quiz set, in presentation order.",
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "quiz.schema.json" }
+    }
+  }
+}

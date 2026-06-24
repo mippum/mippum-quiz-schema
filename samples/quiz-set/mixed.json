@@ -1,0 +1,36 @@
+{
+  "title": "Mixed types sample",
+  "description": "A quiz set that uses every question type.",
+  "quizzes": [
+    {
+      "question": "Who are you?"
+    },
+    {
+      "type": "MultipleChoice",
+      "question": "1+1=?",
+      "options": ["0", "1", "2", "3", "4"],
+      "answer": 3
+    },
+    {
+      "type": "Checkbox",
+      "question": "Choose a numbers.",
+      "options": ["A", "1", "2", "C", "D"],
+      "answer": [2, 3]
+    },
+    {
+      "type": "ShortAnswer",
+      "question": "1+1=?",
+      "answerType": "Number",
+      "answer": 2,
+      "help": {
+        "summary": "1+1=2",
+        "explanation": "If you add one apple to one apple, you get two apples."
+      }
+    },
+    {
+      "type": "FreeAnswer",
+      "question": "How was the quiz?",
+      "answerType": "Text"
+    }
+  ]
+}
