@@ -1,0 +1,38 @@
+{
+  "@context": "https://schema.org/",
+  "@type": "Quiz",
+  "about": {
+    "@type": "Thing",
+    "name": "Basic Arithmetic"
+  },
+  "hasPart": [
+    {
+      "@context": "https://schema.org/",
+      "@type": "Question",
+      "eduQuestionType": "Multiple choice",
+      "text": "1 + 1 = ?",
+      "suggestedAnswer": [
+        {
+          "@type": "Answer",
+          "position": 0,
+          "text": "1"
+        },
+        {
+          "@type": "Answer",
+          "position": 1,
+          "text": "2"
+        },
+        {
+          "@type": "Answer",
+          "position": 2,
+          "text": "3"
+        }
+      ],
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "position": 1,
+        "text": "2"
+      }
+    }
+  ]
+}
