@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/mippum/mippum-quiz-schema/blob/main/quiz.schema.json",
+  "title": "Mippum Quiz",
+  "description": "Schema for a single mippum quiz question.",
+  "type": "object",
+  "required": ["question"],
+  "additionalProperties": false,
+  "properties": {
+    "type": {
+      "description": "The kind of quiz. When omitted, the entry is treated as a plain, free-form question with no grading.",
+      "type": "string",
+      "enum": ["MultipleChoice", "Checkbox", "ShortAnswer", "FreeAnswer"]
+    },
+    "question": {
+      "description": "The question text presented to the user.",
+      "type": "string",
+      "minLength": 1
+    },
+    "options": {
+      "description": "The selectable choices. Used by MultipleChoice and Checkbox questions.",
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1
+    },
+    "answer": {
+      "description": "The correct answer. Its shape depends on `type`: a 1-based option index (integer) for MultipleChoice, an array of 1-based option indices for Checkbox, and a string or number for ShortAnswer.",
+      "$comment": "Constrained per `type` in the allOf branches below."
+    },
+    "answerType": {
+      "description": "The expected data type of the user's input. Used by ShortAnswer and FreeAnswer questions.",
+      "type": "string",
+      "enum": ["Text", "Number"],
+      "default": "Text"
+    },
+    "help": {
+      "description": "Optional explanatory material shown after answering.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "summary": {
+          "description": "A short, one-line takeaway.",
+          "type": "string"
+        },
+        "explanation": {
+          "description": "A longer explanation of the answer.",
+          "type": "string"
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "required": ["type"],
+        "properties": { "type": { "const": "MultipleChoice" } }
+      },
+      "then": {
+        "required": ["options", "answer"],
+        "not": { "required": ["answerType"] },
+        "properties": {
+          "answer": {
+            "description": "1-based index into `options` of the single correct choice.",
+            "type": "integer",
+            "minimum": 1
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "required": ["type"],
+        "properties": { "type": { "const": "Checkbox" } }
+      },
+      "then": {
+        "required": ["options", "answer"],
+        "not": { "required": ["answerType"] },
+        "properties": {
+          "answer": {
+            "description": "1-based indices into `options` of the correct choices.",
+            "type": "array",
+            "items": { "type": "integer", "minimum": 1 },
+            "minItems": 1,
+            "uniqueItems": true
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "required": ["type"],
+        "properties": { "type": { "const": "ShortAnswer" } }
+      },
+      "then": {
+        "not": { "required": ["options"] },
+        "properties": {
+          "answer": {
+            "description": "The expected free-text or numeric answer.",
+            "type": ["string", "number"]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "required": ["type"],
+        "properties": { "type": { "const": "FreeAnswer" } }
+      },
+      "then": {
+        "not": {
+          "anyOf": [
+            { "required": ["options"] },
+            { "required": ["answer"] }
+          ]
+        }
+      }
+    }
+  ]
+}
